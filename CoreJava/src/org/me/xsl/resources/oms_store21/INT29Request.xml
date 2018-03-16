@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://webservices">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:lookupAvailability soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <StoreID xsi:type="xsd:string">123</StoreID>
+         <SKULookupType xsi:type="xsd:string">Immediate</SKULookupType>
+         <SKU xsi:type="xsd:string">54321</SKU>
+         <OrderQuantity xsi:type="xsd:double">2</OrderQuantity>
+         <OrderID xsi:type="xsd:double">54321</OrderID>
+      </web:lookupAvailability>
+   </soapenv:Body>
+</soapenv:Envelope>

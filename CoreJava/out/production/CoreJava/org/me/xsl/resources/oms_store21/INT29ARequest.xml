@@ -1,0 +1,11 @@
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://webservices">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:lookupPostalCode soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <storeID xsi:type="xsd:string">123</storeID>
+         <postalCode xsi:type="xsd:string">75240</postalCode>
+         <shipToStore xsi:type="xsd:string">yes</shipToStore>
+         <ShipStoreDestination xsi:type="xsd:string">no</ShipStoreDestination>
+      </web:lookupPostalCode>
+   </soapenv:Body>
+</soapenv:Envelope>

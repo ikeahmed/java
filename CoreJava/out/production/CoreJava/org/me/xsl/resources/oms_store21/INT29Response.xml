@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+<env:Header />
+<env:Body>
+	<m:lookupAvailabilityResponse xmlns:m="http://yantra.com/yantrawebservices">
+		<m:return>
+			<Response ResponseCode="OK" AvailableStatus="TRUE"
+				CrossSellSKU="NULL" QuantityToSell="23" />
+		</m:return>
+	</m:lookupAvailabilityResponse>
+</env:Body>
+</env:Envelope>

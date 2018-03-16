@@ -1,0 +1,216 @@
+/*-----------------------------------------------------------------------------
+*
+* @(#) CSI $Id: DB_logs.hjava,v 1.1 2000/05/17 18:36:54 canderso Exp $
+*
+*   File Name - SQLServlet1.java
+*     Created - 5/1/99
+*  Created by - Chris Anderson of Alwan, Inc.
+*     Version - $Revision: 1.1 $
+* Description -
+*      Module - example.SQLServlet
+*    Comment -
+*
+*------------------------------------------------------------------------------
+*
+* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+* OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+* HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+* OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+* SUCH DAMAGE.
+*
+*----------------------------------------------------------------------------*/
+
+package sigg.DBA.DBATool;
+
+import sigg.DBA.common.Global;
+import sigg.DBA.common.MainPool;
+
+import com.alwan.ConPool.ConPool;
+import com.alwan.CookLogin.CookLogin;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
+import java.util.StringTokenizer;
+
+import java.sql.*;
+import java.lang.String;
+
+public class inst_name extends HttpServlet { 
+ 
+  static String e_dir       = "DBATool.";
+  static String servletName = Global.url_path + e_dir + "inst_name";
+  public String link_back   = "";
+  ConPool m_conPool;
+
+  public void init(ServletConfig _config)
+    throws ServletException
+  {
+    super.init(_config);
+
+    try {
+      m_conPool = MainPool.init();
+
+      if (m_conPool == null) {
+        String Mesg =
+          "SQLServlet: Unable to initialize gloabl connection pool 01";
+
+        log(Mesg);
+        System.out.println(Mesg);
+        throw new ServletException(Mesg);
+      } else {
+        log("Global Connection Pool 1 Has been connected too");
+      };
+    } catch (Exception _e) {
+      String Mesg =
+        "SQLServlet: Exception error during init " + _e;
+
+      log(Mesg);
+      System.out.println(Mesg);
+      throw new ServletException(Mesg);
+    };
+  }
+
+  public void destroy() {
+    super.destroy();
+  }
+
+  public void doGet(HttpServletRequest _request,
+                    HttpServletResponse _response)
+    throws javax.servlet.ServletException, java.io.IOException
+  {
+    _response.setContentType("text/html");
+    _response.setHeader("Pragma", "no-cache");
+
+    Thread.currentThread().setName(servletName);
+
+    javax.servlet.ServletOutputStream out = _response.getOutputStream();
+    CookLogin userinfo = new CookLogin(_request, Global.cookie_gr);
+
+    if (!userinfo.hasCookies()) {
+      <HTML-FILE=html/noCookie.html>
+      return;
+    };
+
+    out.println("<html><head><title>");
+    out.println("Informix Instance List");
+    out.println("</title></head>");
+
+    String screen_name = "INFORMIX INSTANCE LIST";
+    String mach_id, inst_id, name;
+
+    {<HTML-FILE=html/Header1.html>};
+
+    out.println("<table width=12% cellpadding=0 cellspacing=0 border=0" +
+      "><tr><td bgcolor=#8080AF");
+    out.println("<br>");
+    out.println("</td></tr></table><br>");
+
+
+    Connection con = null;
+
+    try {
+      con = m_conPool.getConnection("SQLServlet-1");
+
+      if (con == null) {
+        /* Error Checking */
+        out.println("<body><h1>Error - Unable to connect to database");
+        out.println("</h1></body></html>");
+        return;
+      };
+    } catch (Exception _e) {
+      _e.printStackTrace();
+      out.println("<body><h1>Error 000: " + _e);
+      out.println("</h1></body></html>");
+      return;
+    };
+    String parm = _request.getParameter("INSTTYPE");
+    PreparedStatement sql_stmt = null;
+
+    String sql_string = "select i.mach_id,m.mach_name,i.inst_id," +
+                        " i.desc" +
+                        " from machine m, instance i" +
+                        " where m.mach_id = i.mach_id and" + 
+                        " i.inst_type = ?" + 
+                        " order by m.mach_name"; 
+
+    try {
+      sql_stmt = con.prepareStatement(sql_string);
+      sql_stmt.setString(1, parm);
+    } catch (SQLException _e) {
+      out.println("<body><h1>Error 001: " + _e);
+      out.println("</h1></body></html>");
+      _e.printStackTrace();
+      return;
+    } finally {
+    };
+
+    try {
+      sql_stmt.executeQuery();
+
+      ResultSet rs0 = sql_stmt.getResultSet();
+
+      if (rs0 == null) {
+        out.println("<body><h1>Error 003: No Rows Found!");
+        out.println("</h1></body></html>");
+        return;
+      } else {
+        out.println("<body background=../DBA/images/bkg[1].gif>");
+        out.println("<table border=0 width=100% cellspacing=0" +
+                   " cellpadding=1 height=8> <tr><td align=center width=50%" +
+                   " height=20><font" +
+                   " face=Verdana size=2 color=#000000><strong>Instance Name" +
+                   " </strong></font></td>");
+       out.println("<td align=center width=50% height=20><font" +
+                   " face=Verdana size=2 color=#000000><strong>"+
+                   "Description</strong></font></td>");
+       out.println("</td></tr>");
+        while (rs0.next()) {
+          mach_id = rs0.getString("mach_id");
+          inst_id = rs0.getString("inst_id");
+          name = rs0.getString("mach_name");
+          out.println("<tr>");
+          out.println("<td align=center width=50% height=15><font" +
+           " face=Verdana size=2 color=#000080>" +
+           " <a href=\"sigg.DBA.DBATool.InformixWelcome?" +
+           "M=" + mach_id + "&I=" + inst_id + "&N=" + name + "\">" +
+           rs0.getString("mach_name") + "</font></td>");
+          out.println("<td align=center width=50% height=15><font" +
+          " face=Verdana size=2 color=#000080>" +
+          rs0.getString("desc")  + "</font></td>");
+          out.println("</tr>");
+        };
+
+      };
+    } catch (SQLException _e) {
+      out.println("<body><h1>Error 003: " + _e);
+      out.println("</h1></body></html>");
+      _e.printStackTrace();
+      return;
+    } finally {
+      try {
+        sql_stmt.close();
+        m_conPool.close(con);
+      } catch(Exception _e) {
+      }
+    }
+    out.println("</table>");
+    out.println("</td>");
+    out.println("</tr>");
+    out.println("</table>");
+    out.println("</body>");
+    out.println("</html>");
+    out.flush();
+    out.close();
+  }
+
+}

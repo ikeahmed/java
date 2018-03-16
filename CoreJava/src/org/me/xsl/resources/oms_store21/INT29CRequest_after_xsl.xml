@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<yan:preConfirmOrder xmlns:yan="http://yantra.com/yantrawebservices">
+			<yan:envString>
+						 <![CDATA[
+					   <YFSEnvironment userId="admin" progId="Store21"/>
+						 ]]>
+					</yan:envString>
+			<yan:apiString>
+						 <![CDATA[
+					   <preConfirmOrder>
+					<OrganizationCode>123</OrganizationCode>
+					<OrderNo>321</OrderNo>
+				</preConfirmOrder>
+						 ]]>
+					</yan:apiString>
+		</yan:preConfirmOrder>
+	</soapenv:Body>
+</soapenv:Envelope>

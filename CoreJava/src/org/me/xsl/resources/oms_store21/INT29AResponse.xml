@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+<env:Header />
+<env:Body>
+	<m:lookupPostalCodeResponse xmlns:m="http://yantra.com/yantrawebservices">
+		<m:return>
+			<Response ResponseCode="OK" ShipStoreDestination="YES"
+				ShipStoreMall="NULL" ShipStoreAddress="23" City="Montreal" StateID="QC" PostalCode="H2A2R1" CountyName="NULL" Country="Canada"/>
+		</m:return>
+	</m:lookupPostalCodeResponse>
+</env:Body>
+</env:Envelope>

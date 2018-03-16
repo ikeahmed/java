@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:m="http://yantra.com/yantrawebservices" xmlns:soap="http://soap.ws.services.responsys.com" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<lookupPostalCodeResponse>
+			<Response>
+				<ResponseCode>OK</ResponseCode>
+				<ShipStoreDestination>YES</ShipStoreDestination>
+				<ShipStoreMall>NULL</ShipStoreMall>
+				<ShipStoreAddress>23</ShipStoreAddress>
+				<City>Montreal</City>
+				<StateID>QC</StateID>
+				<PostalCode>H2A2R1</PostalCode>
+				<CountyName>NULL</CountyName>
+				<Country>Canada</Country>
+			</Response>
+		</lookupPostalCodeResponse>
+	</soapenv:Body>
+</soapenv:Envelope>

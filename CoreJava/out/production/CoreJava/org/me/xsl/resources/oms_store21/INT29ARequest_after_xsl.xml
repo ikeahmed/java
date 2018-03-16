@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<yan:lookupPostalCode xmlns:yan="http://yantra.com/yantrawebservices">
+			<yan:envString>
+						 <![CDATA[
+					   <YFSEnvironment userId="admin" progId="Store21"/>
+						 ]]>
+					</yan:envString>
+			<yan:apiString>
+						 <![CDATA[
+					   <lookupPostalCode>
+					<OrganizationCode>123</OrganizationCode>
+					<ZipCode>75240</ZipCode>
+					<ShipToStore>yes</ShipToStore>
+					<ShipStoreDestination>no</ShipStoreDestination>
+				</lookupPostalCode>
+						 ]]>
+					</yan:apiString>
+		</yan:lookupPostalCode>
+	</soapenv:Body>
+</soapenv:Envelope>

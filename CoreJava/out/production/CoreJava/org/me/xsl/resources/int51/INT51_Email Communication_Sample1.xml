@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Order CampaignName="My Campaign" CustomerEMailID="customer@talend.com" CustomerFirstName="John" CustomerLastName="Doe" CustomerPONo="1223" CancellationReason="" ClosestShipNode="" EntryType="Manual" Language="English"  MinimumShipDate="" MaximumShipDate="" 
+    MinumumDeliveryDate="" MaximumDeliveryDate="" OrderDate="12/2/2013" OriginatingCountry="US"  OrganizationCode="ALDO" OrderNo="51223"   >	
+    <OrderLines>
+        <OrderLine LineType="1" CancelledQty="2" OriginalOrderedQty="3" ReceivedQty="" RemainingQty="" 
+		           ShippedQuantity="" CancellationReason="" TrackingNo="" LinkToTrackOrder="" ShipDate="" >
+           <Item ItemID="" ImageURL="" ExtnStyleCode="" ExtnSizeCode="" ExtnColorCode=""  >			               			 				               
+		      <LanguageDescription Description="" ExtnStyleCode="" ExtnColorCode="" />			   
+		   </Item>
+            <LineOverallTotals LineTotal="" UnitTax="" UnitPrice=""/>                                   
+        </OrderLine>
+    </OrderLines>        
+	<PersonInfoShipTo  FirstName="" LastName="" AddressLine1="" AddressLine2="" AddressLine3="" City=""  State="" ZipCode="" Country=""/>
+    <PersonInfoBillTo FirstName="" LastName="" AddressLine1="" AddressLine2="" AddressLine3="" City="" State="" ZipCode="" Country=""/> 	
+	<OverallTotals  GrandShippingCharges="" GrandTax="" GrandTotal="" LineSubTotal="" />
+	<PaymentMethods>        
+        <PaymentMethod  PaymentType="" TotalChargedAmount="" TotalRefundedAmount="" />
+    </PaymentMethods>    
+	<HeaderTaxes> <HeaderTax  TaxName="" Tax=""  /> </HeaderTaxes>	
+	<HeaderDiscounts> <HeaderDiscount  DiscountName="" Discount="" /> </HeaderDiscounts>	
+
+</Order>

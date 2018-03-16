@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Order AttachmentPath="" CampaignName="" CustomerEMailID="" CustomerFirstName="" CustomerLastName="" CustomerPONo="" EntryType="" Language="" OrderDate="" OriginatingCountry="" 
+       OrganizationCode="" OrderNo=""   >	  
+	<Promotions>
+	<Promotion  PromotionId="" PromotionCodeEndDate="" /> 
+	</Promotions>
+</Order>

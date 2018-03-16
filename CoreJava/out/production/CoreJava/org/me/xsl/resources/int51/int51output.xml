@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.ws.services.responsys.com">
+<soapenv:Header/>
+<soapenv:Body>
+<Order CampaignName="My Campaign" toEmail="customer@talend.com" FirstName="John" LastName="Doe" OrderId="1223" orderOrigineChannel="Manual" Language="English" OrderDate="12/2/2013" OriginatingCountry="US" OrganizationCode="ALDO" OrderNo="51223">
+<Promotions>
+<Promotion PromotionId="51223" PromotionCodeEndDate="12/2/2013"/>
+</Promotions>
+</Order>
+</soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<STL:STL_Envelope xmlns:STL="http://services.sabre.com/STL/v01" xmlns:msg="http://services.sabre.com/STL/Rail/Message/v01">
+    <STL_Header.RQ version="1.0"/>
+    <msg:RailBookingRequest version="1.0">
+        <Suppliers>
+            <Supplier code="SNCB">
+                <Credentials>
+                    <Username>##MASKED##</Username>
+                    <Password>##MASKED##</Password>
+                    <AdditionalField Name="Distributor">BS</AdditionalField>
+                </Credentials>
+            </Supplier>
+        </Suppliers>
+        <Reservations>
+            <Reservation id="1">
+                <Supplier>SNCB</Supplier>
+                <AdditionalContent>
+                    <Field Name="ticket-language">fr_BE</Field>
+                </AdditionalContent>
+                <Status>PURCHASE</Status>
+                <Itinerary>
+                    <Journeys>
+                        <Journey id="J_DEKLTTG95512017060120170601">
+                            <Segments>
+                                <RailSegment id="DEKLTTG95512017060120170601">
+                                    <Train><Identifier carrier="TGV">9551</Identifier>
+                                    </Train>
+                                    <Origin><Schedule>2017-06-01T09:06:00</Schedule><Station>FRPST</Station>
+                                    </Origin>
+                                    <Destination><Schedule>2017-06-01T11:34:00</Schedule><Station>DEKLT</Station>
+                                    </Destination>
+                                </RailSegment>
+                            </Segments>
+                            <Direction>O</Direction>
+                        </Journey>
+                    </Journeys>
+                </Itinerary>
+                <Fares>
+                    <Ticket>
+                        <TicketType>
+                            <Type>eTicket</Type>
+                        </TicketType>
+                        <DeliveryMethod>
+                            <HomePrinting/>
+                        </DeliveryMethod>
+                    </Ticket>
+                    <Price>
+                        <TotalPrice currencyCode="EUR">39.00</TotalPrice>
+                    </Price>
+                    <AssociatedFares>
+                        <Fare>
+                            <Identificator>
+                                <Code>PRZA1</Code>
+                                <Name>Prem's (AZ) - 1st class</Name>
+                                <AdditionalContent>
+                                    <Field Name="domain">I</Field>
+                                    <Field Name="tariff-group">RHE</Field>
+                                </AdditionalContent>
+                            </Identificator>
+                            <Classification>
+                                <CabinClass>First</CabinClass>
+                                <ClassOfService>UN</ClassOfService>
+                            </Classification>
+                            <Price>
+                                <TotalPrice currencyCode="EUR">39.00</TotalPrice>
+                            </Price>
+                            <AdditionalContent>
+                                <Field Name="ESN">false</Field>
+                                <Field Name="EBS">false</Field>
+                                <Field Name="changeable">N</Field>
+                                <Field Name="refundable">N</Field>
+                                <Field Name="segment-type">marketprice</Field>
+                                <Field Name="one-ticket-indicator">true</Field>
+                            </AdditionalContent>
+                            <Scope>
+                                <Segment segmentId="DEKLTTG95512017060120170601"/>
+                            </Scope>
+                        </Fare>
+                    </AssociatedFares>
+                </Fares>
+                <Passengers>
+                    <Passenger gender="U" type="ADULT">
+                        <Name>
+                            <First>Vernon</First>
+                            <Last>Bear</Last>
+                        </Name>
+                        <AdditionalContent>
+                            <Field Name="email-address">suwannee.sunthornmethavee@sabre.com</Field>
+                            <Field Name="passenger-dob">2001-01-01</Field>
+                        </AdditionalContent>
+                    </Passenger>
+                </Passengers>
+            </Reservation>
+        </Reservations>
+    </msg:RailBookingRequest>
+</STL:STL_Envelope>
