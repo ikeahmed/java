@@ -16,7 +16,7 @@ package com.me;
 public class ChangeMe {
 
 	public static void main(String[] args) {
-		System.out.println("salam hamid");
+		System.out.println("Hello");
 		
 
 
