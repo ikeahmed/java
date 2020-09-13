@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Order CampaignName="" CustomerEMailID="" CustomerFirstName="" CustomerLastName="" CustomerPONo="" CancellationReason="" ClosestShipNode="" EntryType="" Language=""  MinimumShipDate="" MaximumShipDate="" 
+    MinumumDeliveryDate="" MaximumDeliveryDate="" OrderDate="" OriginatingCountry=""  OrganizationCode="" OrderNo=""   >	
+    <OrderLines>
+        <OrderLine LineType="" CancelledQty="" OriginalOrderedQty="" ReceivedQty="" RemainingQty="" 
+		           ShippedQuantity="" CancellationReason="" TrackingNo="" LinkToTrackOrder="" ShipDate="" >
+           <Item ItemID="" ImageURL="" ExtnStyleCode="" ExtnSizeCode="" ExtnColorCode=""  >			               			 				               
+		      <LanguageDescription Description="" ExtnStyleCode="" ExtnColorCode="" />			   
+		   </Item>
+            <LineOverallTotals LineTotal="" UnitTax="" UnitPrice=""/>                                   
+        </OrderLine>
+    </OrderLines>        
+	<PersonInfoShipTo  FirstName="" LastName="" AddressLine1="" AddressLine2="" AddressLine3="" City=""  State="" ZipCode="" Country=""/>
+    <PersonInfoBillTo FirstName="" LastName="" AddressLine1="" AddressLine2="" AddressLine3="" City="" State="" ZipCode="" Country=""/> 	
+	<OverallTotals  GrandShippingCharges="" GrandTax="" GrandTotal="" LineSubTotal="" />
+	<PaymentMethods>        
+        <PaymentMethod  PaymentType="" TotalChargedAmount="" TotalRefundedAmount="" />
+    </PaymentMethods>    
+	<HeaderTaxes> <HeaderTax  TaxName="" Tax=""  /> </HeaderTaxes>	
+	<HeaderDiscounts> <HeaderDiscount  DiscountName="" Discount="" /> </HeaderDiscounts>		
+</Order>

@@ -6,15 +6,11 @@ public class DoWhileLoopTest {
 		boolean flag= true;
 		int val = 20;
 		
-		while (flag){
+		while (flag) {
 			System.out.println(val);
-			
 			if (val <= 15)
 				flag = false;
 			val--;
-			
 		}
-
 	}
-
 }

@@ -31,9 +31,9 @@ public class DateTimeCalendarTest {
         System.out.println("current date is " + sdate);
 
         Date date = new Date();
-        Date bdate = simpleDateFormat.parse("1971-01-01");
+        System.out.println("current date and time is " + date.toString());
 
-        System.out.println("current date is " + date.toString());
+        Date bdate = simpleDateFormat.parse("1971-01-01");
         System.out.println("birth date is "+ bdate);
 
             System.out.println("current time from Date : " + date.getTime());

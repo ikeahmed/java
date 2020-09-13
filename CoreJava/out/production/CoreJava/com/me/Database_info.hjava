@@ -1,0 +1,270 @@
+/*-----------------------------------------------------------------------------
+*
+* @(#) CSI $Id: DBSpace.hjava,v 1.1 2000/05/17 18:36:54 canderso Exp $
+*
+*   File Name - SQLServlet1.java
+*     Created - 5/1/99
+*  Created by - Chris Anderson of Alwan, Inc.
+*     Version - $Revision: 1.1 $
+* Description - DBSpace Report
+*      Module - example.SQLServlet
+*    Comment -
+*
+*------------------------------------------------------------------------------
+*
+* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+* OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+* HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+* OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+* SUCH DAMAGE.
+*
+*----------------------------------------------------------------------------*/
+
+package sigg.DBA.DBATool;
+
+import sigg.DBA.common.Global;
+import sigg.DBA.common.MainPool;
+import sigg.DBA.common.Instance;
+
+import com.alwan.ConPool.ConPool;
+import com.alwan.CookLogin.CookLogin;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.awt.*;
+import java.awt.event.*;
+
+import java.io.*;
+import java.util.*;
+import java.util.StringTokenizer;
+
+import java.sql.*;
+import java.lang.String;
+
+public class Database_info extends HttpServlet {
+ 
+  static String e_dir       = "DBATool.";
+  static String servletName = Global.url_path + e_dir + "Database_info";
+  public String link_back   = "";
+  ConPool m_conPool;
+
+  public void init(ServletConfig _config)
+    throws ServletException
+  {
+    super.init(_config);
+
+    try {
+      m_conPool = MainPool.init();
+
+      if (m_conPool == null) {
+        String Mesg =
+          "SQLServlet: Unable to initialize gloabl connection pool 01";
+
+        log(Mesg);
+        System.out.println(Mesg);
+        throw new ServletException(Mesg);
+      } else {
+        log("Global Connection Main Pool Has been connected too");
+      };
+    } catch (Exception _e) {
+      String Mesg =
+        "SQLServlet: Exception error during init " + _e;
+
+      log(Mesg);
+      System.out.println(Mesg);
+      throw new ServletException(Mesg);
+    };
+  }
+
+  public void destroy() {
+    super.destroy();
+  }
+
+  public void doGet(HttpServletRequest _request,
+                    HttpServletResponse _response)
+    throws javax.servlet.ServletException, java.io.IOException
+  {
+    _response.setContentType("text/html");
+    _response.setHeader("Pragma", "no-cache");
+
+    Thread.currentThread().setName(servletName);
+
+    javax.servlet.ServletOutputStream out = _response.getOutputStream();
+    CookLogin userinfo = new CookLogin(_request, Global.cookie_gr);
+
+    if (!userinfo.hasCookies()) {
+      <HTML-FILE=html/noCookie.html>
+      return;
+    };
+    String mach = _request.getParameter("M");
+    String inst = _request.getParameter("I");
+    String name = _request.getParameter("N");
+    String db_name = _request.getParameter("D");
+   
+    int m_id = new Integer(mach).intValue();
+    int inst_id = new Integer(inst).intValue();
+
+    out.println("<html><head><title>");
+    out.println("Dbspace Report");
+    out.println("</title></head>");
+
+    String screen_name = "INFORMATION ABOUT " + db_name.toUpperCase();
+    String instance_name = name.toUpperCase();
+
+    {<HTML-FILE=html/Header.html>};
+
+    out.println("<table width=15% cellpadding=0 cellspacing=0 border=0" +
+      "><tr><td bgcolor=#8080AF>");
+    out.println("<a style=\"color:white; text-decoration:none\" " +
+    "href=sigg.DBA.DBATool.Tab_Ext_Report?" +
+    "M=" + mach + "&I=" + inst + "&N=" + name + "&D=" + db_name + "><font face=Verdana size=2" +
+    ">Table Extents Report</a></font><br>");
+     out.println("</td></tr></table><br>");
+
+    Connection con = null;
+
+    try {
+      con = m_conPool.getConnection("SQLServlet-1");
+
+      if (con == null) {
+        /* Error Checking */
+        out.println("<body><h1>Error - Unable to connect to database");
+        out.println("</h1></body></html>");
+        return;
+      };
+    } catch (Exception _e) {
+      _e.printStackTrace();
+      out.println("<body><h1>Error 000: " + _e);
+      out.println("</h1></body></html>");
+      return;
+    };
+
+      Instance siteConnect = new Instance(con);
+
+      Connection con2 = siteConnect.getConnection(m_id, inst_id);
+
+      if (con2 == null) {
+        log("DBSpace : No connection returned for " + m_id + " " + inst_id);
+        return;
+      } else {
+        log("DBSpace : Connected to 2nd database was returned");
+      };
+    
+      PreparedStatement sql_stmt = null;
+
+      String sql_string = "select s.name dbspace, n.dbsname," +
+                          " sum(ti_nptotal)*2048 total," +
+                          " sum(ti_npused)*2048 used," +
+                          " sum(ti_npdata)*2048 data," +
+                          " (sum(ti_npused) - sum(ti_npdata))*2048 index" +
+                          " from systabinfo i, systabnames n," +
+                              " sysdbspaces s" +
+                          " where i.ti_partnum = n.partnum and" +
+                          " partdbsnum(i.ti_partnum) = s.dbsnum and"  +
+                          " n.dbsname like ?" +
+                          " group by 1,2" + 
+                          " order by 1,2";
+
+    log("Sql: " + sql_string);
+
+    try {
+      sql_stmt = con2.prepareStatement(sql_string);
+
+      log(db_name);
+
+      sql_stmt.setString(1, db_name);
+    } catch (SQLException _e) {
+      out.println("<body><h1>Error 001: " + _e);
+      out.println("</h1></body></html>");
+      _e.printStackTrace();
+      return;
+    } finally {
+    };
+
+    try {
+      sql_stmt.executeQuery();
+
+      ResultSet rs0 = sql_stmt.getResultSet();
+
+      if (rs0 == null) {
+        out.println("<body><h1>Error 002: No Rows Found!");
+        out.println("</h1></body></html>");
+        return;
+      } else {
+        out.println("<body>");
+        while (rs0.next()) {
+          out.println("<table border=0 width=100% cellspacing=0" +
+                   " cellpadding=1 height=8> <tr><td align=right width=5%" +
+                   " height=20><font" +
+                   " face=Verdana size=2 color=#000000><strong>Name" +
+                   " </strong></font></td>");
+       out.println("<td width=2%></td>");
+       out.println("<td width=5% height=15><font face=Verdana size=2 color=#000080>" +
+           rs0.getString("dbsname") + "</font></td></tr>");
+       out.println("<tr><td align=right width=5% height=20>" +
+                   "<font face=Verdana size=2 color=#000000>" +
+                   "<strong>DBSpace</strong></font></td>");
+       out.println("<td width=2%></td>");
+       out.println("<td width=5% height=15><font face=Verdana size=2 color=#000080>" +
+          rs0.getString("dbspace")  + "</font></td></tr>");
+      out.println("<tr><td align=right width=20% height=20 ><font" +
+                  " face=Verdana size=2 color=#000000><strong>Total Size" +
+                  " Allocated in Bytes</strong></font></td>");
+      out.println("<td width=2%></td>");
+      out.println("<td width=20% height=15><font" +
+          " face=Verdana size=2 color=#000080>" +
+          rs0.getString("total") + "</font></td></tr>");
+      out.println("<tr><td align=right width=10% height=20 ><font" +
+                  " face=Verdana size=2 color=#000000><strong>Used" +
+                  " Bytes</strong></font></td>");
+     out.println("<td width=2%></td>");
+      out.println("<td width=10% height=15><font" +
+          " face=Verdana size=2 color=#000080>" +
+          rs0.getString("used") + "</font></td></tr>");
+      out.println("<tr><td align=right width=10% height=20 ><font" +
+                  " face=Verdana size=2 color=#000000><strong>Data" +
+                  " Bytes</strong></font></td>");
+     out.println("<td width=2%></td>");
+     out.println("<td width=10% height=15><font" +
+          " face=Verdana size=2 color=#000080>" +
+          rs0.getString("data") + "</font></td></tr>");
+     out.println("<tr><td align=right width=10% height=20 ><font" +
+                  " face=Verdana size=2 color=#000000><strong>Index" +
+                  " Bytes</strong></font></td>");
+     out.println("<td width=2%></td>");
+      out.println("<td width=10% height=15><font" +
+        " face=Verdana size=2 color=#000080>" +
+          rs0.getString("index") + "</font></td><P>");
+          out.println("</tr>");
+        };
+
+      };
+    } catch (SQLException _e) {
+      out.println("<body><h1>Error 003: " + _e);
+      out.println("</h1></body></html>");
+      _e.printStackTrace();
+      return;
+    } finally {
+      try {
+        sql_stmt.close();
+        m_conPool.close(con2);
+      } catch(Exception _e) {
+      }
+    }
+    out.println("</table>");
+    out.println("</td>");
+    out.println("</tr>");
+    out.println("</table>");
+    out.println("</body>");
+    out.println("</html>");
+    out.flush();
+    out.close();
+  }
+
+}

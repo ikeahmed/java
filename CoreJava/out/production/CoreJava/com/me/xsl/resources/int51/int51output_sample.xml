@@ -1,0 +1,42 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.ws.services.responsys.com">
+    <soapenv:Header/>
+    <soapenv:Body>
+       <soap:triggerCampaignMessage langLocale="CA" priorityLevel="1" campaignType="TRANSACTIONAL">
+          <soap:campaign>
+             <soap:folderName>fault2</soap:folderName>
+ <soap:objectName>Aldo_Account_SignUp_Confirmation_CA</soap:objectName>
+          </soap:campaign>
+          <soap:recipientData>
+             <soap:recipient>
+                <soap:listName>
+ <soap:folderName>!SendBox</soap:folderName>
+ <soap:objectName>CONTACT_LIST_TEST</soap:objectName>
+                </soap:listName>
+ <soap:emailAddress>asarkis@aldogroup.com</soap:emailAddress>
+
+             </soap:recipient>
+             <soap:optionalData>
+ <soap:name>orderOrigineBanner</soap:name>
+                <soap:value>ALDO_CA</soap:value>
+             </soap:optionalData>
+             <soap:optionalData>
+ <soap:name>orderOrigineCountry</soap:name>
+                <soap:value>Canada</soap:value>
+             </soap:optionalData>
+             <soap:optionalData>
+                <soap:name>FirstName</soap:name>
+                <soap:value>John</soap:value>
+             </soap:optionalData>
+             <soap:optionalData>
+                <soap:name>LastName</soap:name>
+                <soap:value>Doe</soap:value>
+             </soap:optionalData>
+             <soap:optionalData>
+                <soap:name>FromEmail</soap:name>
+                <soap:value>news@aldo.com</soap:value>
+             </soap:optionalData>
+
+          </soap:recipientData>
+       </soap:triggerCampaignMessage>
+    </soapenv:Body>
+ </soapenv:Envelope>

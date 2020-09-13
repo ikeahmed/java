@@ -1,0 +1,25 @@
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://webservices">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:modifyShipAddress soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <StoreID xsi:type="xsd:string">123</StoreID>
+         <OrderID xsi:type="xsd:double">?</OrderID>
+         <ShipFirstName xsi:type="xsd:string">Ike</ShipFirstName>
+         <ShipLastName xsi:type="xsd:string">?</ShipLastName>
+         <ShipAddress1 xsi:type="xsd:string">?</ShipAddress1>
+         <ShipAddress2 xsi:type="xsd:string">?</ShipAddress2>
+         <ShipAddress3 xsi:type="xsd:string">?</ShipAddress3>
+         <ShipCity xsi:type="xsd:string">?</ShipCity>
+         <ShipStateID xsi:type="xsd:string">?</ShipStateID>
+         <ShipCountyName xsi:type="xsd:string">?</ShipCountyName>
+         <ShipPostalCode xsi:type="xsd:string">?</ShipPostalCode>
+         <ShipCountryID xsi:type="xsd:string">?</ShipCountryID>
+         <Telephone xsi:type="xsd:string">?</Telephone>
+         <Email xsi:type="xsd:string">?</Email>
+         <EmailOptIn xsi:type="xsd:string">?</EmailOptIn>
+         <languageID xsi:type="xsd:string">?</languageID>
+         <CustomerID xsi:type="xsd:string">?</CustomerID>
+         <AddressBookID xsi:type="xsd:string">?</AddressBookID>
+      </web:modifyShipAddress>
+   </soapenv:Body>
+</soapenv:Envelope>

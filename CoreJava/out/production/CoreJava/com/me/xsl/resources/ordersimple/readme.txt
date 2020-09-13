@@ -1,0 +1,1 @@
+src\org\me\xsl\resources\ordersimple\ordersimple.xml c:\temp\xsltout.xml src\org\me\xsl\resources\ordersimple\ordersimple.xsl

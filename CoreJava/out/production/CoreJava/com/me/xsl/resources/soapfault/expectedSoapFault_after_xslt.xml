@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ErrorRS xmlns="http://www.opentravel.org/OTA/2002/08" Severity="ERROR">
+    <TPA_Extensions>
+        <ErrorInfo>
+            <Code>soap:Client</Code>
+            <Message>BIP3752E: The SOAP Reply node 'ESB.CI.EP.PROFILE.NotifyProfileUpdate.SF_SOAPOUT.SOAP Reply'
+                encountered an error while processing a reply message. An error occurred during reply message
+                processing. See previous error messages to determine the cause of the error. :
+                /build/slot1/S800_P/src/WebServices/WSLibrary/ImbSOAPReplyNode.cpp: 396: ImbSOAPReplyNode::evaluate:
+                ComIbmSOAPReplyNode:
+                ESB/CI/EP/PROFILE/NotifyProfileUpdate#FCMComposite_1_6.SF_SOAPOUT#FCMComposite_1_1BIP5010E: XML
+                Writing Errors have occurred. Errors have occurred during writing of XML. Review further error
+                messages for an indication to the cause of the errors. :
+                /build/slot1/S800_P/src/MTI/MTIforBroker/GenXmlParser4/ImbXMLNSCParser.cpp: 898:
+                ImbXMLNSCParser::refreshBitStreamFromElementsCommon: ComIbmSOAPInputNode:
+                ESB/CI/EP/PROFILE/NotifyProfileUpdate#FCMComposite_1_1BIP5016E: The element with name
+                ''Sabre_OTA_EventNotificationRS'' and field type ''folderType'' is not valid as the child of
+                Root.XML or Root.XMLNSC. Each child of Root.XMLNSC must represent a valid XML construct for the top
+                level of an XML document. The only field types that are valid in this position are XMLNSC.Comment or
+                XMLNSC.ProcessingInstruction. Ensure that the message tree is structured correctly, and that each
+                syntax element has a valid field type. :
+                /build/slot1/S800_P/src/MTI/MTIforBroker/GenXmlParser4/ImbXMLNSCWriter.cpp: 914:
+                ImbXMLNSCWriter::writeMisc: :
+            </Message>
+            <Info>SOAP Fault received from the supplier</Info>
+        </ErrorInfo>
+    </TPA_Extensions>
+</ErrorRS>
